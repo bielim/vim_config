@@ -1,4 +1,4 @@
-" Mauro's vimrc
+" Melanie's vimrc
 
 
 
@@ -24,58 +24,16 @@ let maplocalleader = ";"
 "
 " For more help: :h vundle or go to the website
 filetype off
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
 " Vundle itself (required)
-Plugin 'gmarik/vundle'
+Plugin 'VundleVim/Vundle.vim'
 
-" UltiSnips
-if has("python")
-    " Otherwise use ':bdelete' to just close the buffer and keep the window
-    let g:UltiSnipsEditSplit="vertical"
-    " To avoid collision with YouCompleteMe
-    let g:UltiSnipsExpandTrigger="<c-k>"
-    "let g:UltiSnipsJumpForwardTrigger="<c-k>"  " doesn't work as expected
-    let g:UltiSnipsListSnippets="<s-c-k>"
-    Plugin 'SirVer/ultisnips'
-    " Actually I'd rather write my own snippets in ~/.vim/UltiSnips
-    "Plugin 'honza/vim-snippets'
-endif
-
-" Use clang for formatting
-"   -> doesn't currently work, when in insert mode '//' gets remapped to 
-"   something awkward
-"if v:version >= 702
-"    Plugin 'rhysd/vim-clang-format'
-"    let g:clang_format#code_style="google"
-"    " Allow whitespace before block boides in 'if', 'while' etc
-"    let g:clang_format#style_options = {
-"        \ "BasedOnStyle" : "google",
-"        \ "MaxEmptyLinesToKeep" : "1",
-"        \ "KeepEmptyLinesAtTheStartOfBlocks" : "true"}
-"    " Use gq to use the clang formatter
-"    let g:clang_format#auto_formatexpr=1
-"end
 
 " Add Julia support
 Plugin 'JuliaEditorSupport/julia-vim'
 
-
-"" YouCompleteMe:  https://github.com/Valloric/YouCompleteMe
-"if v:version > 703 || (v:version == 703 && has('patch584'))
-"    let g:ycm_autoclose_preview_window_after_completion = 1
-"    " This might be a security risk as the .ycm.. is automatically loaded now
-"    let g:ycm_confirm_extra_conf = 0
-"    let g:ycm_error_symbol='EE'
-"    let g:ycm_warning_symbol='WW'
-"    let g:ycm_seed_identifiers_with_syntax=1
-"    let g:ycm_goto_buffer_command='same-buffer'
-"    Plugin 'Valloric/YouCompleteMe'
-"    " Jump to definition:
-"    nnoremap <Leader>jd :YcmCompleter GoTo<CR>
-"    " Have more telling indicators in the gutter
-"endif
 
 " NERD-commenter:  https://github.com/scrooloose/nerdcommenter
 if v:version > 700
@@ -133,26 +91,11 @@ Plugin 'tpope/vim-git'
 " Use with %S/... instead of %s/...
 Plugin 'tpope/vim-abolish'
 
-" Doxygen comment generation
-Plugin 'mrtazz/DoxygenToolkit.vim'
-map <C-d> :Dox<CR>
-
 " Text links within files
 Plugin 'vim-scripts/textlink.vim'
 
-" TextLint (doesn't yet work)
-"Plugin 'DamienCassou/textlint'
-
-" LanguageTool
-Plugin 'vim-scripts/LanguageTool'
-let g:languagetool_jar='$HOME/Software/LanguageTool/languagetool-commandline.jar'
-
 " LaTeX support
 Plugin 'lervag/vimtex'
-
-" Understand these
-Plugin 'scrooloose/syntastic'
-
 
 
 " Load indentation rules according to the detected filetype.
@@ -355,3 +298,5 @@ autocmd VimResized * wincmd =
 
 
 set tabstop=4 shiftwidth=2 expandtab
+
+

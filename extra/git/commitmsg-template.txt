@@ -1,0 +1,10 @@
+# Write in imperative ("Fix bug such and such")
+# <------------------ 50 ---------------------> #
+Short title, no more than 50 chars
+
+#Long, potentially multi-line description follows on this line.
+
+# Try to answer these:
+#   Why is the change neccessary / what bug gets fixed?
+#   How does it address the issue?
+#   Side effects?
