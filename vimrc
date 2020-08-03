@@ -1,101 +1,38 @@
 " Melanie's vimrc
 
-
-
 " Reload vimrc after it changed
 autocmd! bufwritepost .vimrc source %
 
 set nocompatible " turn on the 'IMproved' in VIM
 
+"" Remap the <Leader> to '<space>'. This needs to be done before we load the plugins.
+"let mapleader = "\<Space>"
+"" Remap the <LocalLeader> (leader for a specific file type)
+"let maplocalleader = ";"
 
-" Remap the <Leader> to '<space>'. This needs to be done before we load the plugins.
-let mapleader = "\<Space>"
-" Remap the <LocalLeader> (leader for a specific file type)
-let maplocalleader = ";"
-
-" Plugin management by vundle
-" see  https://github.com/gmarik/Vundle.vim for more information
+" Plugins are now managed natively through git submodules in pack/plugins
+" 
+" * Julia support: https://github.com/JuliaEditorSupport/julia-vim.git
 "
-" Quick help
-"
-" :PluginList           - list confgured plugins
-" :PluginInstall        - install plugins
-" :PluginUpdate         - update plugins
-"
-" For more help: :h vundle or go to the website
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#rc()
+" * Smart replace https://github.com/tpope/vim-abolish.git 
+"   (use %S/... instead of %s/...)
 
-" Vundle itself (required)
-Plugin 'VundleVim/Vundle.vim'
+" Status line: https://github.com/vim-airline/vim-airline.git
+let g:airline_theme='powerlineish'
+let g:airline_powerline_fonts = 1
 
+" https://github.com/preservim/nerdcommenter.git
+let NERDCreateDefaultMappings=0       " disable default mappings
+map <Leader>cc <plug>NERDCommenterAlignLeft
+map <Leader>co <plug>NERDCommenterSexy
+map <Leader>ci <plug>NERDCommenterUncomment
 
-" Add Julia support
-Plugin 'JuliaEditorSupport/julia-vim'
-
-
-" NERD-commenter:  https://github.com/scrooloose/nerdcommenter
-if v:version > 700
-    let NERDCreateDefaultMappings=0       " disable default mappings
-    map <Leader>cc <plug>NERDCommenterAlignLeft
-    map <Leader>co <plug>NERDCommenterSexy
-    map <Leader>ci <plug>NERDCommenterUncomment
-    Plugin 'scrooloose/nerdcommenter'
-endif
-
-" NERDtree:  https://github.com/scrooloose/nerdtree
-if v:version > 700
-    Plugin 'scrooloose/nerdtree'
-    let NERDTreeHijackNetrw=1
-    nnoremap <C-e> :NERDTreeToggle<CR>
-endif
-
-" Google C++ style file. This needs a symlink in bundle/google.vim/indent:
-"   cpp.vim -> google.vim
-Plugin 'vim-scripts/google.vim'
-
-" Automatically close brackets and quotes
-Plugin 'Raimondi/delimitMate'
-" Disable generally (and enable it in after/ftplugin/<type>.vim for specific
-" file types
+" https://github.com/Raimondi/delimitMate.git disabled (enable it in
+" after/ftplugin/<type>.vim for specific file types)
 let g:delimitMate_autoclose = 0
 
-" Better status line: use powerline if it is installed, otherwise use airline
-if !empty(glob("~/.local/lib/python2.7/site-packages/powerline/bindings/vim"))
-    set rtp+=~/.local/lib/python2.7/site-packages/powerline/bindings/vim
-    set laststatus=2
-elseif !empty(glob("/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim"))
-    set rtp+=~/.local/lib/python2.7/site-packages/powerline/bindings/vim
-    set laststatus=2
-elseif v:version >= 702
-    " Use vim-airline
-    Plugin 'bling/vim-airline'
-    Plugin 'vim-airline/vim-airline-themes'
-    let g:airline_theme = 'powerlineish'
-    let g:airline#extensions#syntastic#enabled = 1
-
-    " Toggle Syntastic into passive mode because it causes Vim to become very 
-    " slow when saving large files (Melanie Bieli, 20160811)
-    let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-
-    let g:airline_powerline_fonts = 1
-    "let g:airline#extensions#tabline#enabled = 1
-    set laststatus=2
-endif
-
-" Better support for git
-Plugin 'tpope/vim-git'
-
-" Smart replace
-" Use with %S/... instead of %s/...
-Plugin 'tpope/vim-abolish'
-
-" Text links within files
-Plugin 'vim-scripts/textlink.vim'
-
 " LaTeX support
-Plugin 'lervag/vimtex'
+"Plugin 'lervag/vimtex'
 
 
 " Load indentation rules according to the detected filetype.
@@ -223,31 +160,17 @@ endif
 " Line numbering
 highlight LineNr ctermfg=lightgrey ctermbg=black
 function CycleLineNumbers()
-    if v:version >= 703
-        " This should work nicely with vim 7.3 and 7.4
-        if (&number == 1 && &relativenumber == 1)
-            :set nonumber
-            :set norelativenumber
-        elseif (&number == 0 && &relativenumber == 0)
-            :set number
-        elseif (&number == 1 && &relativenumber == 0)
-            :set relativenumber
-        endif
-    else
-        " Variant for older vim
-        if (&number == 1)
-            :set nonumber
-        else
-            :set number
-        endif
+    if (&number == 1 && &relativenumber == 1)
+       :set nonumber
+       :set norelativenumber
+    elseif (&number == 0 && &relativenumber == 0)
+       :set number
+    elseif (&number == 1 && &relativenumber == 0)
+       :set relativenumber
     endif
 endfunction
 map <C-L> :call CycleLineNumbers()<CR>
-" on by default
 set number
-if v:version >= 703
-    set relativenumber
-endif
 
 
 " Use an external text formater for explicit formating (using 'gq')
